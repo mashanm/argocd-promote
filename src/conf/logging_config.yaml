@@ -16,7 +16,7 @@ handlers:
     stream: ext://sys.stdout
 loggers:
   gitops:
-    level: INFO
+    level: DEBUG
 root:
-  level: INFO
+  level: DEBUG
   handlers: [standard_output]

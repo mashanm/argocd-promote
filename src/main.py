@@ -18,7 +18,7 @@ if __name__ == "__main__":
         '-F',
         help='environment to fetch the image tag',
         required=False,
-        default=os.getenv("INPUT_FROMENV", None),
+        default=os.getenv("INPUT_FROM_ENV", None),
     )
     parser.add_argument(
         '--environment', '-e', help='environment name to update',
