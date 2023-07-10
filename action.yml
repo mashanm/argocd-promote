@@ -1,27 +1,38 @@
-# Make sure to change the action name here (must be unique).
-# Update the rest as needed.
-name: 'unique-action-goes-here'
-description: 'BRIEF DESCRIPTION OF YOUR ACTION'
-branding: # Look at documentation for branding options/requirements. These are my favorites.
-  icon: 'book-open'
-  color: 'green'
+name: 'argocd-promote'
+description: 'image tag promotion action for TTL EU k8s services'
 inputs:
-  input-one:  
-    description: 'Description of input-one'
+  service:
+    description: 'Name of the service'
+    required: true
+  environment:
+    description: 'environment to target'
+    required: true
+    default: 'development'
+  fromenv:
+    description: 'environment to fetch image tag'
     required: false
-    default: 'default value goes here'
-  input-two:
-    description: 'Description of input-two'
+  image_tag:
+    description: 'image tag to update in the values.yaml'
     required: false
-    default: 'default value goes here'
-outputs:
-  output-one:
-    description: 'Description of output-one'
-  output-two:
-    description: 'Description of output-two'	
+  access_token:
+    description: 'github pat to commit to values repo'
+    required: false
+  branch:
+    description: 'github pat to commit to values repo'
+    required: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.input-one }}
-    - ${{ inputs.input-two }}
+    - --service
+    - ${{ inputs.service }}
+    - --environment
+    - ${{ inputs.environment }}
+    - --from-env
+    - ${{ inputs.fromenv }}
+    - --image-tag
+    - ${{ inputs.image_tag }}
+    - --token
+    - ${{ inputs.access_token }}
+    - --branch
+    - ${{ inputs.branch }}

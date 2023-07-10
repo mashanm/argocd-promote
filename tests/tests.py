@@ -1,20 +1,16 @@
-
-
-
+import base64
+import os
 import unittest
 
-# Your module imported assuming working directory
-# is root of repository. See workflow in repository
-# for example running of test cases.
-import entrypoint as ep
+from src import gitops
 
-class TestSomething(unittest.TestCase) :
+github_pat = os.environ.get("DEPLOYMENT_TOKEN", "")
 
-    def test_sometestcase(self) :
-        # Unit test cases would go in these
-        # test methods to test the various
-        # Python functions, methods, etc.
-        pass
 
-    def test_anothertestcase(self) :
-        pass
+class TestGitops(unittest.TestCase):
+
+    def test_getfile(self):
+        client = gitops.ghclient(github_pat)
+        _, file = gitops.get_file(client, "service/test/values.yaml", "mashanm/helm-values", "main")
+        self.assertEqual(file.content, "dGVzdAo=\n")
+

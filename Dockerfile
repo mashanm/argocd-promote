@@ -1,16 +1,7 @@
-# If you need Python 3 and the GitHub CLI, then use:
-FROM cicirello/pyaction:4
+FROM public.ecr.aws/lambda/python:3.10
+ADD src/gitops.py /
+ADD src/main.py /
 
-# If all you need is Python 3, use:
-# FROM cicirello/pyaction-lite:3
+RUN pip install ./requirement.txt -y
 
-# If Python 3 + git is sufficient, then use:
-# FROM cicirello/pyaction:3
-
-# To pull from the GitHub Container Registry instead, use one of these:
-# FROM ghcr.io/cicirello/pyaction-lite:3
-# FROM ghcr.io/cicirello/pyaction:4
-# FROM ghcr.io/cicirello/pyaction:3
-
-COPY entrypoint.py /entrypoint.py
-ENTRYPOINT ["/entrypoint.py"]
+ENTRYPOINT ["/main.py"]
