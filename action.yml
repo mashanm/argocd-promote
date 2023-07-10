@@ -16,10 +16,15 @@ inputs:
     required: false
   access_token:
     description: 'github pat to commit to values repo'
-    required: false
+    required: true
   branch:
     description: 'github pat to commit to values repo'
     required: false
+    default: 'main'
+  createpr:
+     description: 'flag to create PR instead of pushing to branch directly'
+     required: false
+     default: false
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -28,11 +33,5 @@ runs:
     - ${{ inputs.service }}
     - --environment
     - ${{ inputs.environment }}
-    - --from-env
-    - ${{ inputs.fromenv }}
-    - --image-tag
-    - ${{ inputs.image_tag }}
     - --token
     - ${{ inputs.access_token }}
-    - --branch
-    - ${{ inputs.branch }}

@@ -16,27 +16,18 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Setup Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v4.6.1
       with:
         python-version: '3.10'
+        cache: 'pip'
+
+    - name: Setup dependencies
+      run: pip install -r requirements.txt
 
     - name: Run Python unit tests
       run: python3 -u -m unittest tests/tests.py
+      env:
+        DEPLOYMENT_TOKEN: ${{ github.token }}
 
     - name: Verify that the Docker image for the action builds
       run: docker build . --file Dockerfile
-
-    - name: Integration test
-      id: integration
-      uses: ./
-      with:
-        input-one: something
-        input-two: true
-
-    - name: Output the outputs of the integration test of the action
-      run: |
-        echo "output-one = ${{ steps.integration.outputs.output-one }}"
-        echo "output-two = ${{ steps.integration.outputs.output-two }}"
-
-    - name: Verify integration test results
-      run: python3 -u -m unittest tests/integration.py
