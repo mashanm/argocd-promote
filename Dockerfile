@@ -1,7 +1,9 @@
 FROM public.ecr.aws/lambda/python:3.10
-ADD src/gitops.py /
-ADD src/main.py /
 
-RUN pip install ./requirement.txt -y
+RUN mkdir /app
+COPY requirements.txt /app/
+COPY src /app/
 
-ENTRYPOINT ["/main.py"]
+RUN pip install -r /app/requirements.txt
+
+ENTRYPOINT ["/app/main.py"]

@@ -11,6 +11,6 @@ class TestGitops(unittest.TestCase):
 
     def test_getfile(self):
         client = gitops.ghclient(github_pat)
-        _, file = gitops.get_file(client, "service/test/values.yaml", "mashanm/helm-values", "main")
+        _, file = gitops.get_file(client, "tests/service/test/values.yaml", "mashanm/argocd-promote", "main")
         self.assertEqual(file.content, "dGVzdAo=\n")
 
